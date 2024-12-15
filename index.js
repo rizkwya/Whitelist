@@ -9,20 +9,19 @@ const API_KEY = process.env.PANEL_API_KEY;
 const SERVER_ID = process.env.SERVER_ID;
 
 client.once('ready', async () => {
-    console.log(`Bot sudah siap sebagai ${client.user.tag}`);
+    console.log(`Bot is ready as ${client.user.tag}`);
 
     const commands = [
         new SlashCommandBuilder()
             .setName('whitelist')
-            .setDescription('Menambahkan username Minecraft ke whitelist')
+            .setDescription('Add Minecraft username to whitelist')
             .addStringOption(option =>
                 option.setName('username')
-                    .setDescription('Nama pengguna Minecraft yang akan ditambahkan ke whitelist')
+                    .setDescription('Minecraft username to add to whitelist')
                     .setRequired(true))
     ];
 
     await client.application.commands.set(commands);
-    console.log('Slash commands berhasil didaftarkan!');
 });
 
 async function sendCommand(command) {
@@ -37,11 +36,11 @@ async function sendCommand(command) {
                 },
             }
         );
-        console.log(`Perintah berhasil dikirim: ${command}`);
-        return 'Username berhasil ditambahkan!';
+        console.log(`The command was sent successfully: ${command}`);
+        return 'Username added successfully!';
     } catch (error) {
-        console.error('Error saat mengirim perintah:', error.response?.data || error);
-        return 'Username gagal ditambahkan.';
+        console.error('Error sending command:', error.response?.data || error);
+        return 'Username failed to add.';
     }
 }
 
@@ -55,7 +54,7 @@ client.on('interactionCreate', async (interaction) => {
 
         if (!username) {
             return interaction.reply({
-                content: 'Tolong masukkan username Minecraft.',
+                content: 'Please enter the Minecraft username.',
                 ephemeral: true,
             });
         }
